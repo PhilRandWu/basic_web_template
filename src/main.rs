@@ -1,17 +1,18 @@
 use std::sync::{Arc, Mutex};
 use actix_web::{web, App, HttpServer};
-use basic_web_template::AppState;
+use basic_web_template::{controller,AppState};
 use basic_web_template::config::Config;
+use basic_web_template::controller::init_logger;
 use basic_web_template::dao::Database;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     println!("Start Server");
+    init_logger();
     // Config
     let config_path: &'static str = "config.json";
     let config = Config::from_file(config_path);
     println!("Using configuration file from {0}", config_path);
-
 
     // Connect to the database
     let db_context = Database::new(&config.get_database_url()).await;
@@ -28,6 +29,7 @@ async fn main() -> std::io::Result<()> {
     let app = HttpServer::new(move || {
         App::new()
             .app_data(app_state.clone())
+            .configure(controller::index_controller_init)
     })
         .bind(config.get_app_url())?;
     println!("listening on: {0}", config.get_app_url());

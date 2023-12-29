@@ -3,6 +3,7 @@ use crate::dao::db_context::Database;
 use std::sync::Arc;
 pub mod config;
 pub mod model;
+pub mod controller;
 pub mod dao;
 
 // AppState
