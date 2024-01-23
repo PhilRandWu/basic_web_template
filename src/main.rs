@@ -2,7 +2,7 @@ use std::sync::{Arc, Mutex};
 use actix_web::{web, App, HttpServer};
 use basic_web_template::{controller,AppState};
 use basic_web_template::config::Config;
-use basic_web_template::controller::init_logger;
+use basic_web_template::controller::log::init_logger;
 use basic_web_template::dao::Database;
 
 #[actix_web::main]
